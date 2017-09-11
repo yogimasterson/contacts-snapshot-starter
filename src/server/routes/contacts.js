@@ -1,7 +1,7 @@
+const router = require('express').Router()
 const DbContacts = require('../../db/contacts')
 const {renderError} = require('../utils')
 
-const router = require('express').Router()
 
 router.get('/new', (request, response) => {
   response.render('new')
