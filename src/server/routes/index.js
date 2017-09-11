@@ -9,5 +9,6 @@ router.get('/', (request, response) => {
 })
 
 router.use('/contacts', contacts); // /contacts/search
+router.use('/signup', signup)
 
 module.exports = router;
