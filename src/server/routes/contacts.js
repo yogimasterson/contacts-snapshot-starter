@@ -1,51 +1,50 @@
-const DbContacts = require('../../db/contacts')
-const {renderError} = require('../utils')
+const contacts = require('../../models/contacts')
 
 const router = require('express').Router()
 
 router.get('/new', (request, response) => {
-  response.render('new')
+  response.render('contacts/new')
 })
 
 router.post('/', (request, response, next) => {
-  DbContacts.createContact(request.body)
+  contacts.create(request.body)
     .then(function(contact) {
       if (contact) return response.redirect(`/contacts/${contact[0].id}`)
       next()
     })
-    .catch( error => renderError(error, response, response) )
+    .catch( error => next(error) )
 })
 
 router.get('/:contactId', (request, response, next) => {
   const contactId = request.params.contactId
   if (!contactId || !/^\d+$/.test(contactId)) return next()
-  DbContacts.getContact(contactId)
+  contacts.findById(contactId)
     .then(function(contact) {
-      if (contact) return response.render('show', { contact })
+      if (contact) return response.render('contacts/show', { contact })
       next()
     })
-    .catch( error => renderError(error, response, response) )
+    .catch( error => next(error) )
 })
 
 
-router.get('/:contactId/delete', (request, response, next) => {
+router.delete('/:contactId', (request, response, next) => {
   const contactId = request.params.contactId
-  DbContacts.deleteContact(contactId)
+  contacts.destroy(contactId)
     .then(function(contact) {
       if (contact) return response.redirect('/')
       next()
     })
-    .catch( error => renderError(error, response, response) )
+    .catch( error => next(error) )
 })
 
 router.get('/search', (request, response, next) => {
   const query = request.query.q
-  DbContacts.searchForContact(query)
+  contacts.search(query)
     .then(function(contacts) {
-      if (contacts) return response.render('index', { query, contacts })
+      if (contacts) return response.render('contacts/index', { query, contacts })
       next()
     })
-    .catch( error => renderError(error, response, response) )
+    .catch( error => next(error) )
 })
 
 module.exports = router
