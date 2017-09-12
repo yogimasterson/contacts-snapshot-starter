@@ -5,12 +5,12 @@ const router = require('express').Router()
 
 router.get('/', (request, response) => {
   response.render('auth/login')
-  console.log('Hello')
 })
 
 router.post('/', (request, response, next) => {
   const username = request.body.username;
   const password = request.body.password;
+  let errorMessage;
   
   users.findUser(username)
     .then(user => bcrypt.compare(password, user[0].password))
@@ -22,7 +22,10 @@ router.post('/', (request, response, next) => {
         throw new Error()
       }
     })
-    .catch( error => next(error) )
+    .catch( err => {
+      errorMessage = 'Incorrect username and/or password'
+      response.render('auth/login', { err: errorMessage })
+    })
 })
 
 module.exports = router

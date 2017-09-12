@@ -1,3 +1,5 @@
+const session = require('express-session')
+
 const errorHandler = (error, request, response, next) => {
   response.status(500).send('Something bad happened. This page should be nicer looking');
 };
@@ -13,6 +15,13 @@ const notFoundHandler = (request, response) => {
 
 const setDefaultResponseLocals = (request, response, next) => {
   response.locals.query = ''
+
+  if (!request.session.user) {
+    response.locals.session = false
+  } else {
+    response.locals.session = true
+  }
+
   next()
 }
 

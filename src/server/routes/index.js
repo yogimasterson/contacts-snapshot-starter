@@ -15,6 +15,11 @@ router.get('/', (request, response, next) => {
     .catch( error => next(error) )
 })
 
+router.get('/logout', (request, response) => {
+  request.session.destroy(err => console.log)
+  response.redirect('/')
+})
+
 router.use('/contacts', contactsRoutes);
 router.use('/signup', signupRoutes);
 router.use('/login', login);

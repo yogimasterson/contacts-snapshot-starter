@@ -5,4 +5,11 @@
     <input type="submit" style="display: none" />
   </form>
   <a href="/contacts/new">New Contact</a>
+  <% if (session) { %>
+    <a class="right-nav" href="/logout">Log Out</a>
+  <% } %>
+  <% if (!session) { %>
+    <a class="right-nav" href="/login">Log In</a>
+    <a class="right-nav" href="/signup">Sign Up</a>
+  <% } %>
 </nav>
