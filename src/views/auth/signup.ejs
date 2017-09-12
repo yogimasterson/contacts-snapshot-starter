@@ -3,19 +3,25 @@
   <h1>Sign Up</h1>
 
   <form method="post" action="/signup" class="new-contact-form">
-    <label>
-      <span>User Name:</span>
-      <input type="text" name="username" />
-    </label>
-    <label>
-      <span>Password:</span>
-      <input type="password" name="password" />
-    </label>
-    <label>
-      <span>Confirm Password:</span>
-      <input type="password" name="password-confirmation" />
-    </label>
-    <input type="submit" value="Sign Up">
+    <% if (typeof err == "undefined") { %>
+      <% } else { %>
+        <h4 class='new-contact-form-errors'>
+          <%= err %>
+        </h4>
+      <% } %>
+      <label>
+        <span>User Name:</span>
+        <input type="text" name="username" />
+      </label>
+      <label>
+        <span>Password:</span>
+        <input type="password" name="password" />
+      </label>
+      <label>
+        <span>Confirm Password:</span>
+        <input type="password" name="password-confirmation" />
+      </label>
+      <input type="submit" value="Sign Up">
   </form>
 
 <%- include ../partials/footer.ejs %>
