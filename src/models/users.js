@@ -2,5 +2,6 @@ const db = require('./db/users');
 
 module.exports = {
   create: db.create,
-  findUser: db.findUser
+  findUser: db.findUser,
+  findAdmin: db.findAdmin
 }

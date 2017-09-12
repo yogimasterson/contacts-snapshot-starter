@@ -13,14 +13,19 @@ router.post('/', (request, response, next) => {
   let errorMessage;
   
   users.findUser(username)
-    .then(user => bcrypt.compare(password, user[0].password))
-    .then(result => {
-      if (result) {
-        request.session.user = username
-        response.redirect('/')
-      } else {
-        throw new Error()
-      }
+    .then(user => {
+      bcrypt.compare(password, user[0].password)
+      .then(result => {
+        if (result) {
+          if (user[0].role === 'admin') {
+            request.session.admin = true
+          }
+          request.session.user = username
+          response.redirect('/')
+        } else {
+          throw new Error()
+        }
+      })
     })
     .catch( err => {
       errorMessage = 'Incorrect username and/or password'

@@ -39,7 +39,27 @@ const findUser = function(username){
   });
 }
 
+const findAdmin = function(role){
+  return db.query(`
+  SELECT
+    *
+  FROM
+    users
+  WHERE
+    role = $1::text
+  `,
+  [
+    role
+  ])
+  .catch(error => {
+    console.error({message: 'Error occurred while executing contacts.create',
+    arguments: arguments});
+    throw error
+  });
+}
+
 module.exports = {
   create,
-  findUser
+  findUser,
+  findAdmin
 }
