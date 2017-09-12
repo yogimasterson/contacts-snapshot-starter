@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 router.get('/new', (request, response) => {
   if (!request.session.admin) {
-    return response.redirect(403, '/')
+    return response.status(403).send('403 not authorized')
   }
   
   response.render('contacts/new')
@@ -33,7 +33,7 @@ router.get('/:contactId', (request, response, next) => {
 
 router.delete('/:contactId', (request, response, next) => {
   if (!request.session.admin) {
-    return response.redirect(403, '/')
+    return response.status(403).send('403 not authorized')
   }
   const contactId = request.params.contactId
   contacts.destroy(contactId)

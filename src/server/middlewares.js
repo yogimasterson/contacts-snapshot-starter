@@ -1,5 +1,3 @@
-const session = require('express-session')
-
 const errorHandler = (error, request, response, next) => {
   response.status(500).send('Something bad happened. This page should be nicer looking');
 };
@@ -20,6 +18,12 @@ const setDefaultResponseLocals = (request, response, next) => {
     response.locals.session = false
   } else {
     response.locals.session = true
+  }
+
+  if (!request.session.admin) {
+    response.locals.admin = false
+  } else {
+    response.locals.admin = true
   }
 
   next()
