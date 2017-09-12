@@ -20,6 +20,26 @@ const create = function(user){
   });
 }
 
+const findUser = function(username){
+  return db.query(`
+  SELECT
+    *
+  FROM
+    users
+  WHERE
+    username = $1::text
+  `,
+  [
+    username
+  ])
+  .catch(error => {
+    console.error({message: 'Error occurred while executing contacts.create',
+    arguments: arguments});
+    throw error
+  });
+}
+
 module.exports = {
-  create
+  create,
+  findUser
 }

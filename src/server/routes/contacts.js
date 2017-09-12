@@ -3,6 +3,10 @@ const contacts = require('../../models/contacts')
 const router = require('express').Router()
 
 router.get('/new', (request, response) => {
+  if (!request.session.user) {
+    return response.status(404).redirect('/login')
+  }
+  
   response.render('contacts/new')
 })
 

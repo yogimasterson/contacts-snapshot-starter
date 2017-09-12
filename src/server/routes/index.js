@@ -6,6 +6,10 @@ const contacts = require('../../models/contacts');
 const middlewares = require('../middlewares');
 
 router.get('/', (request, response, next) => {
+  if (!request.session.user) {
+    return response.status(404).redirect('/login')
+  }
+
   contacts.findAll()
     .then((contacts) => {response.render('contacts/index', { contacts })})
     .catch( error => next(error) )

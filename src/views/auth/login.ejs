@@ -2,7 +2,13 @@
 
   <h1>Log in</h1>
 
-  <form method="get" action="/signup" class="new-contact-form">
+  <form method="post" action="/login" class="new-contact-form">
+    <% if (typeof err == "undefined") { %>
+    <% } else { %>
+      <h4 class='new-contact-form-errors'>
+        <%= err %>
+      </h4>
+    <% } %>
     <label>
       <span>User Name:</span>
       <input type="text" name="username" />
@@ -11,7 +17,7 @@
       <span>Password:</span>
       <input type="password" name="password" />
     </label>
-    <input type="submit" value="Log In">
+          <input type="submit" value="Log In">
   </form>
 
-<%- include ../partials/footer.ejs %>
+  <%- include ../partials/footer.ejs %>

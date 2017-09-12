@@ -24,7 +24,10 @@ router.post('/', (request, response, next) => {
   } else {
     bcrypt.hash(password, saltRounds)
       .then(hash => users.create({ username, hash })) 
-      .then(username => response.redirect('/'))
+      .then(username => {
+        request.session.user = username
+        response.redirect('/')
+      })
       .catch(error => {
         console.warn(error)
         next()
